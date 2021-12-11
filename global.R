@@ -2,8 +2,10 @@ rm(list = ls())
 
 # Load libraries ----------------------------------------------------------
 
+library(shiny)
 library(lubridate)
 library(dplyr)
+library(leaflet)
 
 # Define text about -------------------------------------------------------
 
@@ -18,13 +20,13 @@ mass_shootings_orig <- read.csv("data/Mother Jones - Mass Shootings Database, 19
 # Preprocess data ---------------------------------------------------------
 
 mass_shootings <- mass_shootings_orig %>%
-    mutate_at(.vars = vars(dplyr::matches("date")), .funs = ~ lubridate::mdy(.))
+    dplyr::mutate_at(.vars = dplyr::vars(dplyr::matches("date")), .funs = ~ lubridate::mdy(.))
 
 # Print data --------------------------------------------------------------
 
-str(
-    subset(
+print(
+    str(subset(
         mass_shootings, 
         select = c(location, date, latitude, longitude, case, fatalities, summary)
-        )
-    )
+    ))
+)
